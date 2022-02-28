@@ -41,7 +41,7 @@ def meal_v2(model_name, pretrained=True, progress=True, exportable=False):
 
     model = timm.create_model(mapping[model_name.lower()], pretrained=False, exportable=exportable)
     if pretrained:
-       state_dict = torch.hub.load_state_dict_from_url(model_urls[model_name.lower()], progress=progress,map_location=torch.device("cpu"))
+       state_dict = torch.hub.load_state_dict_from_url(model_urls[model_name.lower()], progress=progress)
        model = torch.nn.DataParallel(model).cuda()
-       model.load_state_dict(state_dict)
+       model.load_state_dict(state_dict,map_location=torch.device("cpu"))
     return model
